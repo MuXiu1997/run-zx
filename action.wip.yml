@@ -1,0 +1,69 @@
+name: 'Run zx'
+description: '( install zx + install dependencies + cache dependencies + run script ) in one step'
+author: 'MuXiu1997'
+
+branding:
+  icon: 'terminal'
+  color: 'orange'
+
+inputs:
+  zx-version:
+    description: >-
+      The version of zx to install.
+      example: "7.2.3",
+      default: "latest"
+    required: false
+    default: 'latest'
+  dependencies:
+    description: >-
+      A list of dependencies to install.
+      example: "typescript\nlodash@4.17.21",
+      default: ""
+    required: false
+    default: ''
+  cache-key:
+    description: >-
+      A key to use for restoring and saving the internal node_modules cache.
+      example: "${{ runner.os }}-specific",
+      default: "${{ runner.os }}-run-zx"
+    required: false
+    # runtime default: "${{ runner.os }}-run-zx"
+  cache-restore-keys:
+    description: >-
+      A list of keys to use for restoring the internal node_modules cache.
+      example: "${{ runner.os }}-specific-1\n${{ runner.os }}-specific",
+      default: # same as cache-key
+    required: false
+    # runtime default: # same as cache-key
+  script:
+    description: >-
+      The script content to run with zx.
+      example: "await $`ls -al`",
+      default: ""
+    required: false
+    default: ''
+  script-file-ext:
+    description: >-
+      The file extension of the script file.
+      example: "md",
+      default: "mjs"
+    required: false
+    default: 'mjs'
+  zx-command:
+    description: >-
+      The zx command to run.
+      example: "zx --quiet {0}",
+      default: "zx {0}"
+    required: false
+    default: 'zx {0}'
+
+outputs:
+  working-directory:
+    description: The working directory of the action.
+  pre-installed-dependencies:
+    description: A list of dependencies that were pre-installed.
+
+runs:
+  using: node20
+  main: dist/index.js
+  post: dist/post.js
