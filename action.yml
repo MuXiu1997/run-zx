@@ -1,10 +1,10 @@
-name: 'Run zx'
+name: Run zx
 description: '( install zx + install dependencies + cache dependencies + run script ) in one step'
-author: 'MuXiu1997'
+author: MuXiu1997
 
 branding:
-  icon: 'terminal'
-  color: 'orange'
+  icon: terminal
+  color: orange
 
 inputs:
   zx-version:
@@ -13,7 +13,7 @@ inputs:
       example: "7.2.3",
       default: "latest"
     required: false
-    default: 'latest'
+    default: latest
   dependencies:
     description: >-
       A list of dependencies to install.
@@ -27,14 +27,13 @@ inputs:
       example: "${{ runner.os }}-specific",
       default: "${{ runner.os }}-run-zx"
     required: false
-    # runtime default: "${{ runner.os }}-run-zx"
+    default: '${{ runner.os }}-run-zx'
   cache-restore-keys:
     description: >-
       A list of keys to use for restoring the internal node_modules cache.
       example: "${{ runner.os }}-specific-1\n${{ runner.os }}-specific",
       default: # same as cache-key
     required: false
-    # runtime default: # same as cache-key
   script:
     description: >-
       The script content to run with zx.
@@ -48,7 +47,7 @@ inputs:
       example: "md",
       default: "mjs"
     required: false
-    default: 'mjs'
+    default: mjs
   zx-command:
     description: >-
       The zx command to run.
@@ -65,5 +64,5 @@ outputs:
 
 runs:
   using: node20
-  main: dist/index.js
-  post: dist/post.js
+  main: dist/main.mjs
+  post: dist/post.mjs
