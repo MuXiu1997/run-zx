@@ -1,0 +1,12 @@
+[
+  "stream-to-string",
+  "@actions/core",
+  "@actions/http-client",
+  "@actions/github",
+  "@actions/artifact",
+  "@actions/cache",
+  "@actions/io",
+  "@actions/exec",
+  "@actions/glob",
+  "@actions/tool-cache"
+]
