@@ -5,27 +5,30 @@ import preInstalledDependencies from '~/pre-installed-dependencies.json'
 
 async function mkcdWorkingDirectory() {
   const workingDirectory = path.join(process.env.HOME, '.run-zx')
+  core.debug(`Creating working directory: ${workingDirectory}`)
 
   await io.mkdirP(workingDirectory)
   process.chdir(workingDirectory)
 
   actionState.workingDirectory = workingDirectory
   actionOutput.workingDirectory = workingDirectory
-
-  core.debug(`Working directory: ${workingDirectory}`)
 }
 
 async function restoreCacheForDependencies() {
-  await cache.restoreCache(
-    [path.join(actionState.workingDirectory, 'node_modules')],
-    actionInput.cacheKey,
-    actionInput.cacheRestoreKeys,
-  )
+  await core.group(`Restoring cache for dependencies`, async () => {
+    core.debug(`Cache key: ${actionInput.cacheKey}`)
+    core.debug(`Cache restore keys: ${actionInput.cacheRestoreKeys.join(', ')}`)
+    await cache.restoreCache(
+      [path.join(actionState.workingDirectory, 'node_modules')],
+      actionInput.cacheKey,
+      actionInput.cacheRestoreKeys,
+    )
+  })
 }
 
 async function writeScript() {
   const scriptFile = path.join(actionState.workingDirectory, `zx-${nanoid()}.${actionInput.scriptFileExt}`)
-  core.debug(`Script file: ${scriptFile}`)
+  core.debug(`Writing script file: ${scriptFile}`)
 
   await fs.writeFile(scriptFile, actionInput.script.join('\n'))
   await fs.chmod(scriptFile, 0o755)
