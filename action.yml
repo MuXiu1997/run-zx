@@ -17,23 +17,24 @@ inputs:
   dependencies:
     description: >-
       A list of dependencies to install.
-      example: "typescript\nlodash@4.17.21",
+      example: "typescript \n lodash@4.17.21",
       default: ""
     required: false
     default: ''
   cache-key:
     description: >-
       A key to use for restoring and saving the internal node_modules cache.
-      example: "${{ runner.os }}-specific",
-      default: "${{ runner.os }}-run-zx"
+      example: "primary-key-$\{\{ runner.os \}\}",
+      default: "run-zx-$\{\{ runner.os \}\}"
     required: false
-    default: '${{ runner.os }}-run-zx'
+    default: '' # set at runtime
   cache-restore-keys:
     description: >-
       A list of keys to use for restoring the internal node_modules cache.
-      example: "${{ runner.os }}-specific-1\n${{ runner.os }}-specific",
-      default: # same as cache-key
+      example: "primary-key-$\{\{ runner.os \}\}-1 \n primary-key-$\{\{ runner.os \}\}",
+      default: ""
     required: false
+    default: ''
   script:
     description: >-
       The script content to run with zx.
