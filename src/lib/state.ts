@@ -1,9 +1,12 @@
+let workingDirectory: string | undefined
 const actionState = {
   get workingDirectory() {
-    return core.getState('working-directory')
+    if (workingDirectory === undefined) workingDirectory = core.getState('working-directory')
+    return workingDirectory!
   },
   set workingDirectory(value: string) {
-    core.saveState('working-directory', value)
+    workingDirectory = value
+    core.saveState('working-directory', workingDirectory!)
   },
 }
 
