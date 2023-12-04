@@ -11,6 +11,8 @@ async function mkcdWorkingDirectory() {
 
   actionState.workingDirectory = workingDirectory
   actionOutput.workingDirectory = workingDirectory
+
+  core.debug(`Working directory: ${workingDirectory}`)
 }
 
 async function restoreCacheForDependencies() {
@@ -23,6 +25,7 @@ async function restoreCacheForDependencies() {
 
 async function writeScript() {
   const scriptFile = path.join(actionState.workingDirectory, `zx-${nanoid()}.${actionInput.scriptFileExt}`)
+  core.debug(`Script file: ${scriptFile}`)
 
   await fs.writeFile(scriptFile, actionInput.script.join('\n'))
   await fs.chmod(scriptFile, 0o755)
@@ -38,19 +41,26 @@ async function runScript(scriptFile: string) {
 }
 
 async function main() {
-  await mkcdWorkingDirectory()
-  await restoreCacheForDependencies()
+  try {
+    await mkcdWorkingDirectory()
+    await restoreCacheForDependencies()
 
-  await npmInstall(`zx@${actionInput.zxVersion}`)
-  core.addPath(path.join(actionState.workingDirectory, 'node_modules', '.bin'))
+    await core.group('Install dependencies', async () => {
+      await npmInstall(`zx@${actionInput.zxVersion}`)
+      core.addPath(path.join(actionState.workingDirectory, 'node_modules', '.bin'))
 
-  await npmInstall(...preInstalledDependencies)
-  actionOutput.preInstalledDependencies = preInstalledDependencies
+      await npmInstall(...preInstalledDependencies)
+      actionOutput.preInstalledDependencies = preInstalledDependencies
 
-  await npmInstall(...actionInput.dependencies)
+      await npmInstall(...actionInput.dependencies)
+    })
 
-  const scriptFile = await writeScript()
-  await runScript(scriptFile)
+    const scriptFile = await writeScript()
+    await runScript(scriptFile)
+  }
+  catch (e) {
+    core.setFailed(e)
+  }
 }
 
 await main()
