@@ -9,6 +9,7 @@
   "keywords": [],
   "scripts": {
     "lint": "eslint --fix .",
+    "bundle": "vite build"
   },
   "dependencies": {
     "@actions/cache": "^3.2.2",
