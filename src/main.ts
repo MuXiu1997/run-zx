@@ -37,6 +37,8 @@ async function writeScript() {
 
 async function runScript(scriptFile: string) {
   const [cmd, ...args] = actionInput.zxCommand.replace('{0}', scriptFile).split(/\s+/)
+  // if `FORCE_COLOR` is not set, then default to `1` to enable color output
+  if (!process.env.FORCE_COLOR) process.env.FORCE_COLOR = '1'
   await exec.exec(cmd, args)
 }
 
