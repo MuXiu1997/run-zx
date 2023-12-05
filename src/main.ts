@@ -19,7 +19,7 @@ async function restoreCacheForDependencies() {
     core.debug(`Cache key: ${actionInput.cacheKey}`)
     core.debug(`Cache restore keys: ${actionInput.cacheRestoreKeys.join(', ')}`)
     await cache.restoreCache(
-      [path.join(actionState.workingDirectory, 'node_modules')],
+      actionState.cachePaths,
       actionInput.cacheKey,
       actionInput.cacheRestoreKeys,
     )

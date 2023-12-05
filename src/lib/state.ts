@@ -8,6 +8,12 @@ const actionState = {
     workingDirectory = value
     core.saveState('working-directory', workingDirectory!)
   },
+  get cachePaths() {
+    return [
+      path.join(this.workingDirectory, 'node_modules'),
+      path.join(this.workingDirectory, 'package.json'),
+    ]
+  },
 }
 
 export default actionState
