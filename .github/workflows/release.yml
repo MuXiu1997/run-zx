@@ -64,11 +64,26 @@ jobs:
       - name: Bundle
         run: pnpm run bundle
 
+      - name: Update Version In README
+        shell: python
+        # language=python
+        run: |
+          import json
+          import re
+          with open('./package.json') as fp:
+            package = json.load(fp)
+          with open('./README.md') as fp:
+            readme = fp.read()
+            readme = re.sub(r'(?<=MuXiu1997/run-zx@v)\d+\.\d+\.\d+.*', package['version'], readme)
+          with open('./README.md', 'w') as fp:
+            fp.write(readme)
+
       - name: Update PR
         # language="Shell Script"
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add ./README.md
           git add ./dist
           git commit --amend --no-edit
           git push --force-with-lease
@@ -83,13 +98,13 @@ jobs:
     if: ${{ needs.release.outputs.release_created }}
     steps:
       - name: Update Tags
-        uses: MuXiu1997/run-zx@v0.1.0-rc.1
+        uses: MuXiu1997/run-zx@v0.1.0
         with:
           # language=javascript
           script: |-
             import * as github from '@actions/github'
             const octokit = github.getOctokit('${{ secrets.GITHUB_TOKEN }}')
             for (const tag in ['v${{ needs.release.outputs.major }}', 'v${{ needs.release.outputs.major }}.${{ needs.release.outputs.minor }}']) {
-              try { await octokit.git.deleteRef({...github.context.repo, ref: `refs/tags/${tag}`}) }
-              finally { await octokit.git.createRef({...github.context.repo, ref: `refs/tags/${tag}`, sha: '${{ needs.release.outputs.sha }}'}) }
+              try { await octokit.rest.git.deleteRef({...github.context.repo, ref: `tags/${tag}`}) }
+              finally { await octokit.rest.git.createRef({...github.context.repo, ref: `refs/tags/${tag}`, sha: '${{ needs.release.outputs.sha }}'}) }
             }
