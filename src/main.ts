@@ -33,8 +33,6 @@ async function writeScript() {
   await fs.writeFile(scriptFile, actionInput.script.join('\n'))
   await fs.chmod(scriptFile, 0o755)
 
-  actionOutput.scriptFile = scriptFile
-
   return scriptFile
 }
 
