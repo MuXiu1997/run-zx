@@ -3,7 +3,7 @@ const actionInput = {
     return core.getInput('zx-version', { required: true })
   },
   get dependencies() {
-    return core.getMultilineInput('dependencies', { required: true, trimWhitespace: true })
+    return core.getMultilineInput('dependencies', { trimWhitespace: true })
   },
   get cacheKey() {
     return core.getInput('cache-key', { trimWhitespace: true }) || `run-zx-${actionRunner.os}`
