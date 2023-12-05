@@ -1,0 +1,65 @@
+name: Example
+
+on:
+  workflow_dispatch:
+
+jobs:
+  basic:
+    name: Basic
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run Zx
+        uses: ./
+        with:
+          zx-version: 7.2.3
+          cache-key: run-zx-example-basic-${{ runner.os }}
+          dependencies: |-
+            hello-world-npm@1.1.1
+          # language=javascript
+          script: |-
+            import * as core from '@actions/core'
+            import HelloWorldNPM from 'hello-world-npm'
+
+            core.info(`${HelloWorldNPM.helloWorld()}`)
+
+  setup:
+    name: Setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Zx
+        uses: ./
+        with:
+          zx-version: 7.2.3
+          cache-key: run-zx-example-setup-${{ runner.os }}
+          zx-command: zx --quiet {0}
+          dependencies: |-
+            hello-world-npm@1.1.1
+          # language=javascript
+          script: |-
+            await fs.symlink(path.join(__dirname, 'node_modules'), path.join(process.env.RUNNER_TEMP, 'node_modules'))
+
+      - name: Run Zx
+        shell: zx {0}
+        # language=javascript
+        run: |
+          import * as core from '@actions/core'
+          import HelloWorldNPM from 'hello-world-npm'
+
+          core.info(`${HelloWorldNPM.helloWorld()}`)
+
+      - name: Run Zx Again
+        shell: zx {0}
+        # language=javascript
+        run: |
+          import toString from 'stream-to-string'
+
+          const cmd = $`echo "Hello World"`
+          console.assert(await toString(cmd.stdout) === 'Hello World\n')
+
+          $`ls -al`
