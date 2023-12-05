@@ -10,7 +10,7 @@
 
 ### See [action.yml](action.yml)
 ```yaml
-- uses: MuXiu1997/run-zx@v0.1.0-rc.1
+- uses: MuXiu1997/run-zx@v0.1.0
   with:
     # The version of zx to install.
     # example: "7.2.3"
@@ -44,7 +44,7 @@
 
 ### Basic
 ```yaml
-- uses: MuXiu1997/run-zx@v0.1.0-rc.1
+- uses: MuXiu1997/run-zx@v0.1.0
   with:
     script: |-
       await $`ls -al`
@@ -56,7 +56,7 @@
 # Therefore, we need to create symbolic links for the node_modules from setup-zx to that directory in order to use dependencies.
 - name: Setup zx
   id: setup-zx
-  uses: MuXiu1997/run-zx@v0.1.0-rc.1
+  uses: MuXiu1997/run-zx@v0.1.0
   with:
     dependencies: |-
       hello-world-npm@1.1.1
