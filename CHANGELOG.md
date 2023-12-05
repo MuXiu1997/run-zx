@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1-rc.1](https://github.com/MuXiu1997/run-zx/compare/v0.1.0-rc.1...v0.1.1-rc.1) (2023-12-05)
+
+
+### Bug Fixes
+
+* cache `package.json` to prevent dependencies from being removed ([f9196f0](https://github.com/MuXiu1997/run-zx/commit/f9196f0dbab7695a3139c13e53d12c585ca0aa7f))
+
 ## 0.1.0-rc.1 (2023-12-04)
 
 
