@@ -18,11 +18,12 @@ async function restoreCacheForDependencies() {
   await core.group(`Restoring cache for dependencies`, async () => {
     core.debug(`Cache key: ${actionInput.cacheKey}`)
     core.debug(`Cache restore keys: ${actionInput.cacheRestoreKeys.join(', ')}`)
-    await cache.restoreCache(
+    const hitKey = await cache.restoreCache(
       actionState.cachePaths,
       actionInput.cacheKey,
       actionInput.cacheRestoreKeys,
     )
+    actionState.cacheHit = hitKey !== undefined
   })
 }
 

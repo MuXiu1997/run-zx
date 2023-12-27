@@ -1,3 +1,17 @@
+import { createHash } from 'node:crypto'
+
+import preInstalledDependencies from '~/pre-installed-dependencies.json'
+
+function calcCacheKey(zxVersion: string, disablePreInstalledDependencies: boolean, dependencies: string[]): string {
+  return createHash('sha256')
+    .update(`zx@${zxVersion}`)
+    .update('\n')
+    .update((disablePreInstalledDependencies ? [] : preInstalledDependencies).join('\n'))
+    .update('\n')
+    .update(dependencies.join('\n'))
+    .digest('hex')
+}
+
 const actionInput = {
   get zxVersion() {
     return core.getInput('zx-version', { required: true })
@@ -14,10 +28,12 @@ const actionInput = {
     return core.getMultilineInput('dependencies', { trimWhitespace: true })
   },
   get cacheKey() {
-    return core.getInput('cache-key', { trimWhitespace: true }) || `run-zx-${actionRunner.os}`
+    return core.getInput('cache-key', { trimWhitespace: true })
+      || `run-zx-${actionRunner.os}-${calcCacheKey(this.zxVersion, this.disablePreInstalledDependencies, this.dependencies)}`
   },
   get cacheRestoreKeys() {
-    return core.getMultilineInput('cache-restore-keys', { trimWhitespace: true })
+    const input = core.getMultilineInput('cache-restore-keys', { trimWhitespace: true })
+    if (input.length === 0) return [`run-zx-${actionRunner.os}-`]
   },
   get script() {
     return core.getMultilineInput('script')

@@ -32,16 +32,16 @@ inputs:
     description: >-
       A key to use for restoring and saving the internal node_modules cache.
       example: "primary-key-$\{\{ runner.os \}\}",
-      default: "run-zx-$\{\{ runner.os \}\}"
+      default: "run-zx-$\{\{ runner.os \}\}-$\{\{ a hash of all dependencies to be installed \}\}"
     required: false
     default: '' # set at runtime
   cache-restore-keys:
     description: >-
       A list of keys to use for restoring the internal node_modules cache.
       example: "primary-key-$\{\{ runner.os \}\}-1 \n primary-key-$\{\{ runner.os \}\}",
-      default: ""
+      default: "run-zx-$\{\{ runner.os \}\}-"
     required: false
-    default: ''
+    default: '' # set at runtime
   script:
     description: >-
       The script content to run with zx.

@@ -26,11 +26,11 @@
 
     # A key to use for restoring and saving the internal node_modules cache.
     # example: "primary-key-${{ runner.os }}"
-    cache-key: 'run-zx-${{ runner.os }}'
+    cache-key: 'run-zx-${{ runner.os }}-${{ a hash of all dependencies to be installed }}'
 
     # A list of keys to use for restoring the internal node_modules cache.
     # example: "primary-key-${{ runner.os }}-1 \n primary-key-${{ runner.os }}",
-    cache-restore-keys: ''
+    cache-restore-keys: 'run-zx-${{ runner.os }}-'
 
     # The script content to run with zx.
     # example: "await $`ls -al`"
