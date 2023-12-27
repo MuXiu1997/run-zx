@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/MuXiu1997/run-zx/compare/v0.2.0...v0.2.1) (2023-12-27)
+
+
+### Bug Fixes
+
+* correct `nanoid` should not be placed in devDependencies ([b64e57b](https://github.com/MuXiu1997/run-zx/commit/b64e57bcdd0abf995f75f85bd24290b054efb87f))
+
 ## [0.2.0](https://github.com/MuXiu1997/run-zx/compare/v0.1.0...v0.2.0) (2023-12-27)
 
 
