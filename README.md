@@ -16,6 +16,10 @@
     # example: "7.2.3"
     zx-version: latest
 
+    # Whether to disable pre-installed dependencies.
+    # example: "true"
+    disable-pre-installed-dependencies: false
+
     # A list of dependencies to install.
     # example: "typescript \n lodash@4.17.21"
     dependencies: ''

@@ -2,6 +2,14 @@ const actionInput = {
   get zxVersion() {
     return core.getInput('zx-version', { required: true })
   },
+  get disablePreInstalledDependencies() {
+    try {
+      return core.getBooleanInput('disable-pre-installed-dependencies', { trimWhitespace: true })
+    }
+    catch (e) {
+      return false
+    }
+  },
   get dependencies() {
     return core.getMultilineInput('dependencies', { trimWhitespace: true })
   },
