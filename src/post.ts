@@ -9,6 +9,10 @@ async function saveCacheForDependencies() {
 }
 
 async function main() {
+  if (actionState.cacheHit) {
+    core.info('Cache hit occurred, skipping save cache')
+    return
+  }
   await saveCacheForDependencies()
 }
 
