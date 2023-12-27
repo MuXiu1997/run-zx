@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.0](https://github.com/MuXiu1997/run-zx/compare/v0.1.0...v0.2.0) (2023-12-27)
+
+
+### Features
+
+* add input option `disable-pre-installed-dependencies` ([187f705](https://github.com/MuXiu1997/run-zx/commit/187f7051e856286b50c6760c54b58e67da5c37d3))
+* update the strategy for generating cache key ([4a01ce3](https://github.com/MuXiu1997/run-zx/commit/4a01ce3f52c329a48b8761aa73fcd5380c1710c6))
+
 ## [0.1.0](https://github.com/MuXiu1997/run-zx/compare/v0.1.0-rc.1...v0.1.0) (2023-12-05)
 
 
