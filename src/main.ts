@@ -52,8 +52,11 @@ async function main() {
       await npmInstall(`zx@${actionInput.zxVersion}`)
       core.addPath(path.join(actionState.workingDirectory, 'node_modules', '.bin'))
 
-      await npmInstall(...preInstalledDependencies)
-      actionOutput.preInstalledDependencies = preInstalledDependencies
+      if (!actionInput.disablePreInstalledDependencies) {
+        await npmInstall(...preInstalledDependencies)
+        actionOutput.preInstalledDependencies = preInstalledDependencies
+      }
+      else { actionOutput.preInstalledDependencies = [] }
 
       await npmInstall(...actionInput.dependencies)
     })

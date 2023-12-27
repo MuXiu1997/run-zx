@@ -14,6 +14,13 @@ inputs:
       default: "latest"
     required: false
     default: latest
+  disable-pre-installed-dependencies:
+    description: >-
+      Whether to disable pre-installed dependencies.
+      example: "true",
+      default: "false"
+    required: false
+    default: 'false'
   dependencies:
     description: >-
       A list of dependencies to install.
